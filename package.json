@@ -2,7 +2,7 @@
   "name": "@tmountjr/ts-data-structures",
   "version": "1.0.0",
   "description": "A set of data tructures written in TypeScript",
-  "main": "index.js",
+  "main": "./dist/index.js",
   "dependencies": {
     "typescript": "^4.5.4"
   },
