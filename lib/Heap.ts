@@ -13,7 +13,7 @@ interface IHeapConstructor<T1 = number, T2 = number, T3 = boolean> {
 class Heap extends TreeAsArray<number> implements IHeap {
   constructor(
     initialItems: number[],
-    protected comparitor: IHeapConstructor = undefined
+    protected comparitor: IHeapConstructor
   ) {
     super();
     if (typeof comparitor === 'undefined') {
@@ -38,7 +38,9 @@ class Heap extends TreeAsArray<number> implements IHeap {
   public poll(): number {
     if (this.size === 0) throw new Error('Heap is empty.');
     const item = this.items[0];
-    this.items[0] = this.items.pop();
+    const popped = this.items.pop();
+    if (!popped) throw new Error('Popped undefined value.');
+    this.items[0] = popped;
     this.size--;
     this.heapifyDown();
     return item;

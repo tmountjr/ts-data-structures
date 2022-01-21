@@ -3,7 +3,7 @@
  */
 class StackNode<T> {
   /** Pointer to the previous node in the stack. */
-  previous: StackNode<T> = null;
+  previous: StackNode<T>|null = null;
 
   /**
    * Create a new node.
@@ -17,7 +17,7 @@ class StackNode<T> {
  */
 export class Stack<T> {
   /** The top of the stack. */
-  top: StackNode<T> = null;
+  top: StackNode<T>|null = null;
 
   /** The number of items in the stack. */
   size = 0;
@@ -39,10 +39,12 @@ export class Stack<T> {
    * Remove and return the top item of the stack.
    * @returns The item from the top of the stack.
    */
-  pop(): StackNode<T> {
+  pop(): StackNode<T>|null {
     if (this.size === 0) return null;
     const temp = this.top;
-    this.top = this.top.previous;
+    const prev = this.top?.previous;
+    if (!prev) throw new Error('No child detected.');
+    this.top = prev;
     this.size--;
     return temp;
   }

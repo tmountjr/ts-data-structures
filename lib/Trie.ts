@@ -2,8 +2,8 @@
  * Node representing a single letter in the trie.
  */
 class TrieNode {
-  parent: TrieNode = null;
-  children: object = {};
+  parent: TrieNode|null = null;
+  children: { [key: string]: TrieNode; } = {};
   end = false;
 
   constructor (public key: string) {}
@@ -14,7 +14,7 @@ class TrieNode {
    */
   getWord(): string {
     let output: string[] = [];
-    let node: TrieNode = this;
+    let node: TrieNode|null = this;
     while (node !== null) {
       output.unshift(node.key);
       node = node.parent;
@@ -28,7 +28,7 @@ class TrieNode {
  * Trie data structure.
  */
 export class Trie {
-  protected root = new TrieNode(null);
+  protected root: TrieNode|null = new TrieNode('');
 
   /**
    * Insert a word into the trie.
@@ -36,14 +36,15 @@ export class Trie {
    */
   insert(word: string): void {
     let node = this.root;
+    if (!node) throw new Error('Trie has not been initialized.');
     for (let i = 0; i < word.length; i++) {
-      if (!node.children[word[i]]) {
+      if (node && !node.children[word[i]]) {
         node.children[word[i]] = new TrieNode(word[i]);
         node.children[word[i]].parent = node;
       }
       node = node.children[word[i]];
 
-      if (i === word.length - 1) {
+      if (node && i === word.length - 1) {
         node.end = true;
       }
     }
@@ -56,6 +57,7 @@ export class Trie {
    */
   contains(word: string): boolean {
     let node = this.root;
+    if (!node) throw new Error('Trie has not been initialized.');
     for (let i = 0; i < word.length; i++) {
       if (node.children[word[i]]) {
         node = node.children[word[i]];
@@ -73,6 +75,7 @@ export class Trie {
    */
   find(prefix: string): string[] {
     let node = this.root;
+    if (!node) throw new Error('Trie has not been initialized.');
     let output: string[] = [];
     for (let i = 0; i < prefix.length; i++) {
       if (node.children[prefix[i]]) {
@@ -108,6 +111,7 @@ export class Trie {
   remove(word: string): void {
     let root = this.root;
     if (!word) return;
+    if (!root) throw new Error('Trie has not been initialized.');
 
     /** recursive helper method */
     const removeWord = (node: TrieNode, word: string): boolean => {
@@ -116,7 +120,7 @@ export class Trie {
         if (hasChildren) {
           node.end = false;
         } else {
-          node.parent.children = {};
+          if (node.parent) node.parent.children = {};
         }
         return true;
       }

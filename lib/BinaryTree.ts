@@ -1,6 +1,6 @@
 class TreeNode<T> {
-  left: TreeNode<T> = null;
-  right: TreeNode<T> = null;
+  left: TreeNode<T>|null = null;
+  right: TreeNode<T>|null = null;
   constructor(public value: T) { }
 
   /**
@@ -15,7 +15,7 @@ class TreeNode<T> {
      * Set up a function to rebuild the stack as necessary.
      */
     const buildStack = () => {
-      let current: TreeNode<T> = this;
+      let current: TreeNode<T>|null|undefined = this;
       const temp: TreeNode<T>[] = [];
 
       while (temp.length || current) {
@@ -24,8 +24,10 @@ class TreeNode<T> {
           current = current.left;
         } else {
           current = temp.pop();
-          stack.push(current);
-          current = current.right;
+          if (current) {
+            stack.push(current);
+            current = current.right;
+          }
         }
       }
     }
@@ -59,16 +61,18 @@ class TreeNode<T> {
      * Set up a function to rebuild the stack as necessary.
      */
     const buildStack = () => {
-      let current: TreeNode<T> = this;
+      let current: TreeNode<T>|null|undefined = this;
       const temp: TreeNode<T>[] = [];
 
       temp.push(current);
 
       while (temp.length) {
         current = temp.pop();
-        stack.push(current);
-        if (current.right) temp.push(current.right);
-        if (current.left) temp.push(current.left);
+        if (current) {
+          stack.push(current);
+          if (current.right) temp.push(current.right);
+          if (current.left) temp.push(current.left);
+        }
       }
     }
 
@@ -102,15 +106,17 @@ class TreeNode<T> {
      * Set up a function to rebuild the stack as necessary.
      */
     const buildStack = () => {
-      let current: TreeNode<T> = this;
+      let current: TreeNode<T>|null|undefined = this;
       const temp: TreeNode<T>[] = [];
 
       temp.push(current);
       while (temp.length) {
         current = temp.pop();
-        stack.push(current);
-        if (current.left) temp.push(current.left);
-        if (current.right) temp.push(current.right);
+        if (current) {
+          stack.push(current);
+          if (current.left) temp.push(current.left);
+          if (current.right) temp.push(current.right);
+        }
       }
     }
 
@@ -132,7 +138,7 @@ class TreeNode<T> {
 }
 
 export class BinaryTree<T> {
-  root: TreeNode<T> = null;
+  root: TreeNode<T>|null = null;
 
   constructor() { }
 
@@ -141,7 +147,7 @@ export class BinaryTree<T> {
    * @param value The value to insert.
    * @returns {void}
    */
-  insert(value: T): TreeNode<T> {
+  insert(value: T): TreeNode<T>|void {
     const toInsert = new TreeNode<T>(value);
     if (this.root === null) {
       this.root = toInsert;
@@ -174,7 +180,7 @@ export class BinaryTree<T> {
   contains(value: T): boolean|TreeNode<T> {
     if (!this.root) return false;
 
-    let current = this.root;
+    let current:TreeNode<T>|null|undefined = this.root;
     let found: boolean|TreeNode<T> = false;
     while (current && !found) {
       if (value < current.value) {
@@ -194,10 +200,10 @@ export class BinaryTree<T> {
    * @param value The value to delete
    * @returns The new root following the deletion.
    */
-  delete(root: TreeNode<T>, value: T): TreeNode<T> {
+  delete(root: TreeNode<T>|null, value: T): TreeNode<T>|null|void {
     // find the value and keep track of its parent
-    let parentNode: TreeNode<T> = null;
-    let current = root;
+    let parentNode: TreeNode<T>|null = null;
+    let current: TreeNode<T>|null = root;
     while (current && current.value !== value) {
       parentNode = current;
       if (value < current.value) {
@@ -210,7 +216,7 @@ export class BinaryTree<T> {
       return;
     }
     if (!current.left && !current.right) {
-      if (current !== root) {
+      if (current !== root && parentNode) {
         if (parentNode.left === current) {
           parentNode.left = null;
         } else {
@@ -232,7 +238,7 @@ export class BinaryTree<T> {
         ? current.left
         : current.right;
 
-      if (current !== root) {
+      if (current !== root && parentNode) {
         if (current === parentNode.left) {
           parentNode.left = child;
         } else {
@@ -255,9 +261,9 @@ export class BinaryTree<T> {
    * @param rootNode The node to start; if omitted, starts at the tree root.
    * @returns The next node in the given order.
    */
-  inOrder(rootNode: TreeNode<T> = null) {
+  inOrder(rootNode: TreeNode<T>|null = null) {
     const node = rootNode || this.root;
-    return node.inOrder();
+    if (node) return node.inOrder();
   }
 
   /**
@@ -265,9 +271,9 @@ export class BinaryTree<T> {
    * @param rootNode The node to start; if omitted, starts at the tree root.
    * @returns The next node in the given order.
    */
-  preOrder(rootNode: TreeNode<T> = null) {
+  preOrder(rootNode: TreeNode<T>|null = null) {
     const node = rootNode || this.root;
-    return node.preOrder();
+    if (node) return node.preOrder();
   }
 
   /**
@@ -275,8 +281,8 @@ export class BinaryTree<T> {
    * @param rootNode The node to start; if omitted, starts at the tree root.
    * @returns The next node in the given order.
    */
-  postOrder(rootNode: TreeNode<T> = null) {
+  postOrder(rootNode: TreeNode<T>|null = null) {
     const node = rootNode || this.root;
-    return node.postOrder();
+    if (node) return node.postOrder();
   }
 }

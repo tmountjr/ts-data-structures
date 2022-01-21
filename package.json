@@ -1,16 +1,43 @@
 {
+  "name": "@tmountjr/ts-data-structures",
+  "version": "1.0.0",
+  "description": "A set of data tructures written in TypeScript",
+  "main": "index.js",
+  "dependencies": {
+    "typescript": "^4.5.4"
+  },
   "devDependencies": {
     "@types/expect": "^24.3.0",
     "@types/mocha": "^9.0.0",
     "mocha": "^9.1.4",
+    "rimraf": "^3.0.2",
     "ts-mocha": "^9.0.2",
     "ts-node": "^10.4.0"
   },
-  "dependencies": {
-    "typescript": "^4.5.4"
-  },
   "scripts": {
-    "build": "tsc -b",
-    "test": "ts-mocha src/**/*.spec.ts"
-  }
+    "clean": "rimraf ./dist",
+    "build": "npm run clean && npm run test && tsc -b",
+    "test": "ts-mocha lib/**/*.spec.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tmountjr/ts-data-structures.git"
+  },
+  "keywords": [
+    "data structures",
+    "linked list",
+    "graph",
+    "stack",
+    "heap",
+    "queue",
+    "trie",
+    "binary tree",
+    "sort"
+  ],
+  "author": "Tom Mount <tmountjr@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tmountjr/ts-data-structures/issues"
+  },
+  "homepage": "https://github.com/tmountjr/ts-data-structures#readme"
 }

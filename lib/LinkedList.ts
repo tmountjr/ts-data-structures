@@ -41,7 +41,7 @@ export class LinkedList<T> implements IterableIterator<ListNode<T>> {
   /**
    * Used in iterations.
    */
-  private iteratorPointer: ListNode<T> = null;
+  private iteratorPointer: ListNode<T>|null = null;
 
   constructor(data: T[] = []) {
     if (data.length) {

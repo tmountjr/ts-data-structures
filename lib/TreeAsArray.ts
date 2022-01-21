@@ -33,6 +33,7 @@ export class TreeAsArray<T> {
   public poll(): T {
     if (this.size === 0) throw new Error('Tree is empty.');
     const item = this.items.shift();
+    if (!item) throw new Error('Tree contains undefined element.');
     this.size--;
     return item;
   }

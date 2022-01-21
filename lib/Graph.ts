@@ -10,7 +10,9 @@ export class Graph<T> {
   nodeLookup: Map<T, GraphNode<T>> = new Map<T, GraphNode<T>>();
 
   getNode(id: T): GraphNode<T> {
-    return this.nodeLookup.get(id);
+    const toReturn: GraphNode<T>|undefined = this.nodeLookup.get(id);
+    if (toReturn) return toReturn;
+    throw new Error('No matching node with given ID found.');
   }
 
   addNode(id: T): void {
@@ -55,7 +57,9 @@ export class Graph<T> {
     stack.push(s);
     visited.add(s.id);
     while (stack.size > 0) {
-      let { data: t } = stack.pop();
+      const popped = stack.pop();
+      if (!popped) throw new Error('Bad stack.');
+      let t = popped.data;
       if (t === d) return true;
       for (let { data: child } of t.adjacent) {
         if (!visited.has(child.id)) {
@@ -99,13 +103,19 @@ export class Graph<T> {
     while (nextToVisit.size > 0) {
       const { data: current } = nextToVisit.shift();
       if (current === d) {
-        return weight * edges.get(destination);
+        const edgeDestination = edges.get(destination);
+        if (!edgeDestination) {
+          throw new Error('Edge count for destination does not exist.');
+        }
+        return weight * edgeDestination;
       }
       for (let { data: neighbor } of current.adjacent) {
         if (!visited.has(neighbor)) {
           visited.add(neighbor);
           nextToVisit.add(neighbor);
-          edges.set(neighbor.id, edges.get(current.id) + 1);
+          const edge = edges.get(current.id);
+          if (!edge) throw new Error('Edge count for current node does not exist.');
+          edges.set(neighbor.id, edge + 1);
         }
       }
     }
