@@ -8,26 +8,38 @@ class TreeNode<T> {
    * @returns The next node in the given order.
    */
   inOrder() {
+    /** The stack to use for this iterator. */
+    let stack: TreeNode<T>[] = [];
+
+    /**
+     * Set up a function to rebuild the stack as necessary.
+     */
+    const buildStack = () => {
+      let current: TreeNode<T> = this;
+      const temp: TreeNode<T>[] = [];
+
+      while (temp.length || current) {
+        if (current) {
+          temp.push(current);
+          current = current.left;
+        } else {
+          current = temp.pop();
+          stack.push(current);
+          current = current.right;
+        }
+      }
+    }
+
+    // build the initial stack.
+    buildStack();
+
     return {
       [Symbol.iterator]: () => {
-        let current: TreeNode<T> = this;
-        const temp: TreeNode<T>[] = [],
-              stack: TreeNode<T>[] = [];
-
-        while (temp.length || current) {
-          if (current) {
-            temp.push(current);
-            current = current.left;
-          } else {
-            current = temp.pop();
-            stack.push(current);
-            current = current.right;
-          }
-        }
-
         return {
           next: () => {
             if (stack.length) return { done: false, value: stack.shift() };
+            // Rebuild the stack for the next iteration.
+            buildStack();
             return { done: true, value: null };
           }
         }
@@ -40,23 +52,37 @@ class TreeNode<T> {
    * @returns The next node in the given order.
    */
   preOrder() {
+    /** The stack to use for this iterator. */
+    let stack: TreeNode<T>[] = [];
+
+    /**
+     * Set up a function to rebuild the stack as necessary.
+     */
+    const buildStack = () => {
+      let current: TreeNode<T> = this;
+      const temp: TreeNode<T>[] = [];
+
+      temp.push(current);
+
+      while (temp.length) {
+        current = temp.pop();
+        stack.push(current);
+        if (current.right) temp.push(current.right);
+        if (current.left) temp.push(current.left);
+      }
+    }
+
+    // build the initial stack.
+    buildStack();
+
     return {
       [Symbol.iterator]: () => {
-        let current: TreeNode<T> = this;
-        const temp: TreeNode<T>[] = [],
-              stack: TreeNode<T>[] = [];
 
-        temp.push(current);
-
-        while (temp.length) {
-          current = temp.pop();
-          stack.push(current);
-          if (current.right) temp.push(current.right);
-          if (current.left) temp.push(current.left);
-        }
         return {
           next: () => {
             if (stack.length) return { done: false, value: stack.shift() };
+            // Rebuild the stack for the next iteration.
+            buildStack();
             return { done: true, value: null };
           }
         }
@@ -69,22 +95,34 @@ class TreeNode<T> {
    * @returns The next node in the given order.
    */
   postOrder() {
+    /** The stack to use for this iterator. */
+    let stack: TreeNode<T>[] = [];
+
+    /**
+     * Set up a function to rebuild the stack as necessary.
+     */
+    const buildStack = () => {
+      let current: TreeNode<T> = this;
+      const temp: TreeNode<T>[] = [];
+
+      temp.push(current);
+      while (temp.length) {
+        current = temp.pop();
+        stack.push(current);
+        if (current.left) temp.push(current.left);
+        if (current.right) temp.push(current.right);
+      }
+    }
+
+    buildStack();
+
     return {
       [Symbol.iterator]: () => {
-        let current: TreeNode<T> = this;
-        const temp: TreeNode<T>[] = [],
-              stack: TreeNode<T>[] = [];
-
-        temp.push(current);
-        while (temp.length) {
-          current = temp.pop();
-          stack.push(current);
-          if (current.left) temp.push(current.left);
-          if (current.right) temp.push(current.right);
-        }
         return {
           next: () => {
             if (stack.length) return { done: false, value: stack.pop() };
+            // Rebuild the stack for the next iteration.
+            buildStack();
             return { done: true, value: null };
           }
         }

@@ -56,52 +56,76 @@ describe('Test Binary Tree functionality', () => {
     });
   });
   describe('Test traversal cases', () => {
-    it('preorder traversal (from node)', () => {
-      const expected = [ 4, 2, 0, 1, 3, 5];
-      const actual = [...tree.root.preOrder()].map(n => n.value);
-      expect(expected).toStrictEqual(actual);
-    });
-    it('preorder traversal (from tree)', () => {
-      const expected = [ 4, 2, 0, 1, 3, 5];
-      const actual = [...tree.preOrder()].map(n => n.value);
-      expect(expected).toStrictEqual(actual);
-    });
-    it('interior preorder traversal', () => {
-      const expected = [ 2, 0, 1, 3 ];
-      const actual = [...tree.preOrder(tree.root.left)].map(n => n.value);
-      expect(expected).toStrictEqual(actual);
-    });
-
-    it('inorder traversal (from node)', () => {
-      const expected = [ 0, 1, 2, 3, 4, 5 ];
-      const actual = [...tree.root.inOrder()].map(n => n.value);
-      expect(expected).toStrictEqual(actual);
-    });
-    it('inorder traversal (from tree)', () => {
-      const expected = [ 0, 1, 2, 3, 4, 5 ];
-      const actual = [...tree.inOrder()].map(n => n.value);
-      expect(expected).toStrictEqual(actual);
-    });
-    it('interior inorder traversal', () => {
-      const expected = [0, 1, 2, 3];
-      const actual = [...tree.root.left.inOrder()].map(n => n.value);
-      expect(expected).toStrictEqual(actual);
+    describe('preorder cases', () => {
+      it('preorder traversal (from node)', () => {
+        const expected = [ 4, 2, 0, 1, 3, 5];
+        const actual = [...tree.root.preOrder()].map(n => n.value);
+        expect(actual).toStrictEqual(expected);
+      });
+      it('preorder traversal (from tree)', () => {
+        const expected = [ 4, 2, 0, 1, 3, 5];
+        const actual = [...tree.preOrder()].map(n => n.value);
+        expect(actual).toStrictEqual(expected);
+      });
+      it('interior preorder traversal', () => {
+        const expected = [ 2, 0, 1, 3 ];
+        const actual = [...tree.preOrder(tree.root.left)].map(n => n.value);
+        expect(actual).toStrictEqual(expected);
+      });
+      it('preorder traversal (multiple passes)', () => {
+        const expected = [4, 2, 0, 1, 3, 5];
+        const actual1 = [...tree.preOrder()];
+        const actual2 = [...tree.preOrder()].map(n => n.value);
+        expect(actual2).toStrictEqual(expected);
+      });
     });
 
-    it('postorder traversal (from node)', () => {
-      const expected = [ 1, 0, 3, 2, 5, 4 ];
-      const actual = [...tree.root.postOrder()].map(n => n.value);
-      expect(expected).toStrictEqual(actual);
+    describe('inorder cases', () => {
+      it('inorder traversal (from node)', () => {
+        const expected = [ 0, 1, 2, 3, 4, 5 ];
+        const actual = [...tree.root.inOrder()].map(n => n.value);
+        expect(actual).toStrictEqual(expected);
+      });
+      it('inorder traversal (from tree)', () => {
+        const expected = [ 0, 1, 2, 3, 4, 5 ];
+        const actual = [...tree.inOrder()].map(n => n.value);
+        expect(actual).toStrictEqual(expected);
+      });
+      it('interior inorder traversal', () => {
+        const expected = [0, 1, 2, 3];
+        const actual = [...tree.root.left.inOrder()].map(n => n.value);
+        expect(actual).toStrictEqual(expected);
+      });
+      it('inorder traversal (multiple passes)', () => {
+        const expected = [0, 1, 2, 3, 4, 5];
+        const actual1 = [...tree.inOrder()];
+        const actual2 = [...tree.inOrder()].map(n => n.value);
+        expect(actual2).toStrictEqual(expected);
+      });
     });
-    it('postorder traversal (from tree)', () => {
-      const expected = [ 1, 0, 3, 2, 5, 4 ];
-      const actual = [...tree.postOrder()].map(n => n.value);
-      expect(expected).toStrictEqual(actual);
-    });
-    it('interior postorder traversal', () => {
-      const expected = [ 1, 0, 3, 2 ];
-      const actual = [...tree.postOrder(tree.root.left)].map(n => n.value);
-      expect(expected).toStrictEqual(actual);
+
+    describe('postorder cases', () => {
+      it('postorder traversal (from node)', () => {
+        const expected = [ 1, 0, 3, 2, 5, 4 ];
+        const actual = [...tree.root.postOrder()].map(n => n.value);
+        expect(actual).toStrictEqual(expected);
+      });
+      it('postorder traversal (from tree)', () => {
+        const expected = [ 1, 0, 3, 2, 5, 4 ];
+        const actual = [...tree.postOrder()].map(n => n.value);
+        expect(actual).toStrictEqual(expected);
+      });
+      it('interior postorder traversal', () => {
+        const expected = [ 1, 0, 3, 2 ];
+        const actual = [...tree.postOrder(tree.root.left)].map(n => n.value);
+        expect(actual).toStrictEqual(expected);
+      });
+      it('postorder traversal (multiple passes)', () => {
+        const expected = [1, 0, 3, 2, 5, 4];
+        const actual1 = [...tree.postOrder()];
+        const actual2 = [...tree.postOrder()].map(n => n.value);
+        expect(actual2).toStrictEqual(expected);
+      });
     });
   });
 });
