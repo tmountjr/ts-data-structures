@@ -1,0 +1,15 @@
+{
+  "include": ["./src/**/*.ts"],
+  "exclude": [
+    "./src/MinHeap.ts",
+    "./src/**/*.spec.ts"
+  ],
+  "compilerOptions": {
+    "declaration": true,
+    "outDir": "lib",
+    "rootDir": "./src",
+    "declarationMap": true,
+    "lib": ["ES2016"],
+    "downlevelIteration": true
+  }
+}
