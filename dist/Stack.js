@@ -43,14 +43,10 @@ var Stack = /** @class */ (function () {
      * @returns The item from the top of the stack.
      */
     Stack.prototype.pop = function () {
-        var _a;
-        if (this.size === 0)
+        if (this.size === 0 || !this.top)
             return null;
         var temp = this.top;
-        var prev = (_a = this.top) === null || _a === void 0 ? void 0 : _a.previous;
-        if (!prev)
-            throw new Error('No child detected.');
-        this.top = prev;
+        this.top = this.top.previous;
         this.size--;
         return temp;
     };

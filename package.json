@@ -3,6 +3,13 @@
   "version": "1.0.0",
   "description": "A set of data tructures written in TypeScript",
   "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "typesVersions": {
+    "*": {
+      "dist/index.d.ts": [ "dist/index.d.ts" ],
+      "*": [ "dist/*" ]
+    }
+  },
   "dependencies": {
     "typescript": "^4.5.4"
   },

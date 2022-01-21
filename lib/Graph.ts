@@ -114,7 +114,7 @@ export class Graph<T> {
           visited.add(neighbor);
           nextToVisit.add(neighbor);
           const edge = edges.get(current.id);
-          if (!edge) throw new Error('Edge count for current node does not exist.');
+          if (typeof edge === 'undefined') throw new Error('Edge count for current node does not exist.');
           edges.set(neighbor.id, edge + 1);
         }
       }

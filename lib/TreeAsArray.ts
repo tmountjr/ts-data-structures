@@ -1,5 +1,3 @@
-import { timeStamp } from "console";
-
 export class TreeAsArray<T> {
   public size: number = 0;
   protected items: Array<T> = [];

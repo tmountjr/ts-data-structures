@@ -40,11 +40,9 @@ export class Stack<T> {
    * @returns The item from the top of the stack.
    */
   pop(): StackNode<T>|null {
-    if (this.size === 0) return null;
+    if (this.size === 0 || !this.top) return null;
     const temp = this.top;
-    const prev = this.top?.previous;
-    if (!prev) throw new Error('No child detected.');
-    this.top = prev;
+    this.top = this.top.previous;
     this.size--;
     return temp;
   }

@@ -16,6 +16,7 @@
     "noLib": false,
     "preserveConstEnums": true,
     "downlevelIteration": true,
-    "strict": true
+    "strict": true,
+    "typeRoots": [ "./node_modules/@types" ]
   }
 }

@@ -163,7 +163,7 @@ var Graph = /** @class */ (function () {
                         visited.add(neighbor);
                         nextToVisit.add(neighbor);
                         var edge = edges.get(current.id);
-                        if (!edge)
+                        if (typeof edge === 'undefined')
                             throw new Error('Edge count for current node does not exist.');
                         edges.set(neighbor.id, edge + 1);
                     }
