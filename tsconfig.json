@@ -1,5 +1,5 @@
 {
-  "include": ["lib/**/*.ts"],
+  "include": ["lib/**/*.ts", "index.ts"],
   "exclude": [
     "node_modules",
     "lib/**/*.spec.ts"
