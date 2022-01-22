@@ -4,8 +4,8 @@ exports.Trie = void 0;
 /**
  * Node representing a single letter in the trie.
  */
-var TrieNode = /** @class */ (function () {
-    function TrieNode(key) {
+class TrieNode {
+    constructor(key) {
         this.key = key;
         this.parent = null;
         this.children = {};
@@ -15,33 +15,32 @@ var TrieNode = /** @class */ (function () {
      * Get the word ending with this node.
      * @returns The word formed by the path from this node to the root of the trie.
      */
-    TrieNode.prototype.getWord = function () {
-        var output = [];
-        var node = this;
+    getWord() {
+        let output = [];
+        let node = this;
         while (node !== null) {
             output.unshift(node.key);
             node = node.parent;
         }
         return output.join('');
-    };
-    return TrieNode;
-}());
+    }
+}
 /**
  * Trie data structure.
  */
-var Trie = /** @class */ (function () {
-    function Trie() {
+class Trie {
+    constructor() {
         this.root = new TrieNode('');
     }
     /**
      * Insert a word into the trie.
      * @param word The word to insert.
      */
-    Trie.prototype.insert = function (word) {
-        var node = this.root;
+    insert(word) {
+        let node = this.root;
         if (!node)
             throw new Error('Trie has not been initialized.');
-        for (var i = 0; i < word.length; i++) {
+        for (let i = 0; i < word.length; i++) {
             if (node && !node.children[word[i]]) {
                 node.children[word[i]] = new TrieNode(word[i]);
                 node.children[word[i]].parent = node;
@@ -51,17 +50,17 @@ var Trie = /** @class */ (function () {
                 node.end = true;
             }
         }
-    };
+    }
     /**
      * Check if the trie contains the complete word.
      * @param word The word to look for.
      * @returns TRUE if the complete word is found, FALSE if not.
      */
-    Trie.prototype.contains = function (word) {
-        var node = this.root;
+    contains(word) {
+        let node = this.root;
         if (!node)
             throw new Error('Trie has not been initialized.');
-        for (var i = 0; i < word.length; i++) {
+        for (let i = 0; i < word.length; i++) {
             if (node.children[word[i]]) {
                 node = node.children[word[i]];
             }
@@ -70,18 +69,18 @@ var Trie = /** @class */ (function () {
             }
         }
         return node.end;
-    };
+    }
     /**
      * Find all words starting with a given prefix.
      * @param prefix The prefix to search for.
      * @returns A list of all words prefixed by {prefix}.
      */
-    Trie.prototype.find = function (prefix) {
-        var node = this.root;
+    find(prefix) {
+        let node = this.root;
         if (!node)
             throw new Error('Trie has not been initialized.');
-        var output = [];
-        for (var i = 0; i < prefix.length; i++) {
+        let output = [];
+        for (let i = 0; i < prefix.length; i++) {
             if (node.children[prefix[i]]) {
                 node = node.children[prefix[i]];
             }
@@ -91,34 +90,34 @@ var Trie = /** @class */ (function () {
         }
         this.findAllWords(node, output);
         return output;
-    };
+    }
     /**
      * Find all words within a node.
      * @param node The node to search.
      * @param arr Pointer to an array in which to store results.
      */
-    Trie.prototype.findAllWords = function (node, arr) {
+    findAllWords(node, arr) {
         if (node.end) {
             arr.unshift(node.getWord());
         }
-        for (var child in node.children) {
+        for (let child in node.children) {
             this.findAllWords(node.children[child], arr);
         }
-    };
+    }
     /**
      * Remove a word from the trie.
      * @param word The word to remove.
      */
-    Trie.prototype.remove = function (word) {
-        var root = this.root;
+    remove(word) {
+        let root = this.root;
         if (!word)
             return;
         if (!root)
             throw new Error('Trie has not been initialized.');
         /** recursive helper method */
-        var removeWord = function (node, word) {
+        const removeWord = (node, word) => {
             if (node.end && node.getWord() === word) {
-                var hasChildren = Object.keys(node.children).length > 0;
+                let hasChildren = Object.keys(node.children).length > 0;
                 if (hasChildren) {
                     node.end = false;
                 }
@@ -128,14 +127,13 @@ var Trie = /** @class */ (function () {
                 }
                 return true;
             }
-            for (var key in node.children) {
+            for (let key in node.children) {
                 removeWord(node.children[key], word);
             }
             return false;
         };
         removeWord(root, word);
-    };
-    return Trie;
-}());
+    }
+}
 exports.Trie = Trie;
 //# sourceMappingURL=Trie.js.map

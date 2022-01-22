@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BinaryTree = void 0;
-var TreeNode = /** @class */ (function () {
-    function TreeNode(value) {
+class TreeNode {
+    constructor(value) {
         this.value = value;
         this.left = null;
         this.right = null;
@@ -11,17 +11,15 @@ var TreeNode = /** @class */ (function () {
      * Traverse through the tree, starting with the current node, using inorder traversal.
      * @returns The next node in the given order.
      */
-    TreeNode.prototype.inOrder = function () {
-        var _a;
-        var _this = this;
+    inOrder() {
         /** The stack to use for this iterator. */
-        var stack = [];
+        let stack = [];
         /**
          * Set up a function to rebuild the stack as necessary.
          */
-        var buildStack = function () {
-            var current = _this;
-            var temp = [];
+        const buildStack = () => {
+            let current = this;
+            const temp = [];
             while (temp.length || current) {
                 if (current) {
                     temp.push(current);
@@ -38,10 +36,10 @@ var TreeNode = /** @class */ (function () {
         };
         // build the initial stack.
         buildStack();
-        return _a = {},
-            _a[Symbol.iterator] = function () {
+        return {
+            [Symbol.iterator]: () => {
                 return {
-                    next: function () {
+                    next: () => {
                         if (stack.length)
                             return { done: false, value: stack.shift() };
                         // Rebuild the stack for the next iteration.
@@ -49,24 +47,22 @@ var TreeNode = /** @class */ (function () {
                         return { done: true, value: null };
                     }
                 };
-            },
-            _a;
-    };
+            }
+        };
+    }
     /**
      * Traverse through the tree, starting with the current node, using preorder traversal.
      * @returns The next node in the given order.
      */
-    TreeNode.prototype.preOrder = function () {
-        var _a;
-        var _this = this;
+    preOrder() {
         /** The stack to use for this iterator. */
-        var stack = [];
+        let stack = [];
         /**
          * Set up a function to rebuild the stack as necessary.
          */
-        var buildStack = function () {
-            var current = _this;
-            var temp = [];
+        const buildStack = () => {
+            let current = this;
+            const temp = [];
             temp.push(current);
             while (temp.length) {
                 current = temp.pop();
@@ -81,10 +77,10 @@ var TreeNode = /** @class */ (function () {
         };
         // build the initial stack.
         buildStack();
-        return _a = {},
-            _a[Symbol.iterator] = function () {
+        return {
+            [Symbol.iterator]: () => {
                 return {
-                    next: function () {
+                    next: () => {
                         if (stack.length)
                             return { done: false, value: stack.shift() };
                         // Rebuild the stack for the next iteration.
@@ -92,24 +88,22 @@ var TreeNode = /** @class */ (function () {
                         return { done: true, value: null };
                     }
                 };
-            },
-            _a;
-    };
+            }
+        };
+    }
     /**
      * Traverse through the tree, starting with the current node, using postorder traversal.
      * @returns The next node in the given order.
      */
-    TreeNode.prototype.postOrder = function () {
-        var _a;
-        var _this = this;
+    postOrder() {
         /** The stack to use for this iterator. */
-        var stack = [];
+        let stack = [];
         /**
          * Set up a function to rebuild the stack as necessary.
          */
-        var buildStack = function () {
-            var current = _this;
-            var temp = [];
+        const buildStack = () => {
+            let current = this;
+            const temp = [];
             temp.push(current);
             while (temp.length) {
                 current = temp.pop();
@@ -123,10 +117,10 @@ var TreeNode = /** @class */ (function () {
             }
         };
         buildStack();
-        return _a = {},
-            _a[Symbol.iterator] = function () {
+        return {
+            [Symbol.iterator]: () => {
                 return {
-                    next: function () {
+                    next: () => {
                         if (stack.length)
                             return { done: false, value: stack.pop() };
                         // Rebuild the stack for the next iteration.
@@ -134,13 +128,12 @@ var TreeNode = /** @class */ (function () {
                         return { done: true, value: null };
                     }
                 };
-            },
-            _a;
-    };
-    return TreeNode;
-}());
-var BinaryTree = /** @class */ (function () {
-    function BinaryTree() {
+            }
+        };
+    }
+}
+class BinaryTree {
+    constructor() {
         this.root = null;
     }
     /**
@@ -148,13 +141,13 @@ var BinaryTree = /** @class */ (function () {
      * @param value The value to insert.
      * @returns {void}
      */
-    BinaryTree.prototype.insert = function (value) {
-        var toInsert = new TreeNode(value);
+    insert(value) {
+        const toInsert = new TreeNode(value);
         if (this.root === null) {
             this.root = toInsert;
             return toInsert;
         }
-        var current = this.root;
+        let current = this.root;
         while (current) {
             if (value < current.value) {
                 if (current.left === null) {
@@ -171,17 +164,17 @@ var BinaryTree = /** @class */ (function () {
                 current = current.right;
             }
         }
-    };
+    }
     /**
      * See if the tree contains a specific value.
      * @param value The value to search for.
      * @returns The node at which the value was found, or FALSE if not found.
      */
-    BinaryTree.prototype.contains = function (value) {
+    contains(value) {
         if (!this.root)
             return false;
-        var current = this.root;
-        var found = false;
+        let current = this.root;
+        let found = false;
         while (current && !found) {
             if (value < current.value) {
                 current = current.left;
@@ -194,17 +187,17 @@ var BinaryTree = /** @class */ (function () {
             }
         }
         return found;
-    };
+    }
     /**
      * Delete a value from a root.
      * @param root The root of the deletion process.
      * @param value The value to delete
      * @returns The new root following the deletion.
      */
-    BinaryTree.prototype.delete = function (root, value) {
+    delete(root, value) {
         // find the value and keep track of its parent
-        var parentNode = null;
-        var current = root;
+        let parentNode = null;
+        let current = root;
         while (current && current.value !== value) {
             parentNode = current;
             if (value < current.value) {
@@ -231,16 +224,16 @@ var BinaryTree = /** @class */ (function () {
             }
         }
         else if (current.left && current.right) {
-            var successor = current.right;
+            let successor = current.right;
             while (successor.left) {
                 successor = successor.left;
             }
-            var successorValue = successor.value;
+            let successorValue = successor.value;
             this.delete(root, successorValue);
             current.value = successorValue;
         }
         else {
-            var child = current.left
+            let child = current.left
                 ? current.left
                 : current.right;
             if (current !== root && parentNode) {
@@ -256,7 +249,7 @@ var BinaryTree = /** @class */ (function () {
             }
         }
         return root;
-    };
+    }
     /**
      * Iterator options
      */
@@ -265,35 +258,31 @@ var BinaryTree = /** @class */ (function () {
      * @param rootNode The node to start; if omitted, starts at the tree root.
      * @returns The next node in the given order.
      */
-    BinaryTree.prototype.inOrder = function (rootNode) {
-        if (rootNode === void 0) { rootNode = null; }
-        var node = rootNode || this.root;
+    inOrder(rootNode = null) {
+        const node = rootNode || this.root;
         if (node)
             return node.inOrder();
-    };
+    }
     /**
      * Iterate through the tree using preorder traversal starting with rootNode.
      * @param rootNode The node to start; if omitted, starts at the tree root.
      * @returns The next node in the given order.
      */
-    BinaryTree.prototype.preOrder = function (rootNode) {
-        if (rootNode === void 0) { rootNode = null; }
-        var node = rootNode || this.root;
+    preOrder(rootNode = null) {
+        const node = rootNode || this.root;
         if (node)
             return node.preOrder();
-    };
+    }
     /**
      * Iterate through the tree using postorder traversal starting with rootNode.
      * @param rootNode The node to start; if omitted, starts at the tree root.
      * @returns The next node in the given order.
      */
-    BinaryTree.prototype.postOrder = function (rootNode) {
-        if (rootNode === void 0) { rootNode = null; }
-        var node = rootNode || this.root;
+    postOrder(rootNode = null) {
+        const node = rootNode || this.root;
         if (node)
             return node.postOrder();
-    };
-    return BinaryTree;
-}());
+    }
+}
 exports.BinaryTree = BinaryTree;
 //# sourceMappingURL=BinaryTree.js.map

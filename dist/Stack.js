@@ -4,23 +4,22 @@ exports.Stack = void 0;
 /**
  * Node used in stacks.
  */
-var StackNode = /** @class */ (function () {
+class StackNode {
     /**
      * Create a new node.
      * @param data The data for the new node.
      */
-    function StackNode(data) {
+    constructor(data) {
         this.data = data;
         /** Pointer to the previous node in the stack. */
         this.previous = null;
     }
-    return StackNode;
-}());
+}
 /**
  * The stack implementation.
  */
-var Stack = /** @class */ (function () {
-    function Stack() {
+class Stack {
+    constructor() {
         /** The top of the stack. */
         this.top = null;
         /** The number of items in the stack. */
@@ -31,26 +30,25 @@ var Stack = /** @class */ (function () {
      * @param data The data to add.
      * @returns A pointer to the top of the stack.
      */
-    Stack.prototype.push = function (data) {
-        var node = new StackNode(data);
+    push(data) {
+        const node = new StackNode(data);
         node.previous = this.top;
         this.top = node;
         this.size++;
         return this.top;
-    };
+    }
     /**
      * Remove and return the top item of the stack.
      * @returns The item from the top of the stack.
      */
-    Stack.prototype.pop = function () {
+    pop() {
         if (this.size === 0 || !this.top)
             return null;
-        var temp = this.top;
+        const temp = this.top;
         this.top = this.top.previous;
         this.size--;
         return temp;
-    };
-    return Stack;
-}());
+    }
+}
 exports.Stack = Stack;
 //# sourceMappingURL=Stack.js.map
