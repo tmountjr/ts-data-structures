@@ -1,13 +1,17 @@
 {
   "name": "@tmountjr/ts-data-structures",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A set of data tructures written in TypeScript",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "typesVersions": {
     "*": {
-      "dist/index.d.ts": [ "dist/index.d.ts" ],
-      "*": [ "dist/*" ]
+      "dist/index.d.ts": [
+        "dist/index.d.ts"
+      ],
+      "*": [
+        "dist/*"
+      ]
     }
   },
   "dependencies": {
