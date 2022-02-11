@@ -31,6 +31,16 @@ describe('Test Heaps', () => {
       const minHeap = new MinHeap(input);
       expect(minHeap.peek()).toEqual(cloned[0]);
     });
+    it('polling a single-element heap collapses the entire heap', () => {
+      const minHeap = new MinHeap([1]);
+      const polled = minHeap.poll();
+      expect(polled).toEqual(1);
+      expect(minHeap.size).toEqual(0);
+
+      // Adding a larger element than the one added before should peek the larger element;
+      minHeap.add(2);
+      expect(minHeap.peek()).toEqual(2);
+    });
   });
 
   describe('Test MaxHeap', () => {
@@ -56,6 +66,16 @@ describe('Test Heaps', () => {
     it('peeking shows correct max value', () => {
       const maxHeap = new MaxHeap(input);
       expect(maxHeap.peek()).toEqual(cloned[0]);
+    });
+    it('polling a single-element heap collapses the entire heap', () => {
+      const maxHeap = new MaxHeap([2]);
+      const polled = maxHeap.poll();
+      expect(polled).toEqual(2);
+      expect(maxHeap.size).toEqual(0);
+      
+      // Adding a smaller element than the one added before should peek the smaller element
+      maxHeap.add(1);
+      expect(maxHeap.peek()).toEqual(1);
     });
   })
 });

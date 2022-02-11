@@ -31,9 +31,11 @@ class Heap extends TreeAsArray_1.TreeAsArray {
         const popped = this.items.pop();
         if (!popped)
             throw new Error('Popped undefined value.');
-        this.items[0] = popped;
-        this.size--;
-        this.heapifyDown();
+        this.size = this.items.length;
+        if (this.size > 0) {
+            this.items[0] = popped;
+            this.heapifyDown();
+        }
         return item;
     }
     /**
